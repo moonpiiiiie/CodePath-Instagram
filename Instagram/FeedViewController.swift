@@ -12,11 +12,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var posts = [PFObject]()
     
+    var refreshControl: UIRefreshControl!
+    
     @IBOutlet weak var tableView: UITableView!
     
+    @objc func onRefresh(){
+        loadPosts()
+        self.refreshControl.endRefreshing()
+    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    func loadPosts(){
         let query = PFQuery(className: "Posts")
         query.includeKey("author")
         query.limit = 20
@@ -29,6 +34,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("Error: \(error)")
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        loadPosts()
         
 
     }
@@ -68,6 +79,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 400
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(onRefresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+        
     }
     
 
