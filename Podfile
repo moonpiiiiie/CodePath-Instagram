@@ -8,6 +8,7 @@ target 'Instagram' do
   pod 'AlamofireImage'
   # Pods for Instagram
   pod 'SnackBar.swift'
+  pod 'MessageInputBar'
 
   target 'InstagramTests' do
     inherit! :search_paths
