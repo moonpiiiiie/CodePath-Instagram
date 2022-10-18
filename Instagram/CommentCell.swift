@@ -13,6 +13,8 @@ class CommentCell: UITableViewCell {
     
     @IBOutlet weak var commentContent: UILabel!
     
+    @IBOutlet weak var commentProfile: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

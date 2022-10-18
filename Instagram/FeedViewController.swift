@@ -96,10 +96,19 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             let imageFile = post["image"] as! PFFileObject
             let urlString = imageFile.url!
             let url = URL(string: urlString)!
-            
             cell.postImage.af.setImage(withURL: url)
             
+            if (user["image"] != nil) {
+                let authorImageFile = user["image"] as! PFFileObject
+                let authorImageUrlString = authorImageFile.url!
+                let authorImageUrl = URL(string: authorImageUrlString)!
+                cell.authorImage.af.setImage(withURL: authorImageUrl)
+            } else {
+                cell.authorImage.image = UIImage(named: "image_placeholder")
+            }
+            
             return cell
+            
         } else if indexPath.row <= comments.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as! CommentCell
             
@@ -109,6 +118,15 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let user = comment["author"] as! PFUser
             cell.commentAuthor.text = user.username
+            
+            if (user["image"] != nil) {
+                let authorImageFile = user["image"] as! PFFileObject
+                let authorImageUrlString = authorImageFile.url!
+                let authorImageUrl = URL(string: authorImageUrlString)!
+                cell.commentProfile.af.setImage(withURL: authorImageUrl)
+            } else {
+                cell.commentProfile.image = UIImage(named: "image_placeholder")
+            }
             
             return cell
             

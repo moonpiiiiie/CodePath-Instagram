@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
         user.password = passwordField.text
         user.signUpInBackground {(success, error)in
             if success {
-                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                self.performSegue(withIdentifier: "TabBarController", sender: nil)
             } else {
                 SnackBar.make(in: self.view, message: "\(error?.localizedDescription)", duration: .lengthLong).show()
 //                print("Error \(error?.localizedDescription)")
@@ -31,13 +31,22 @@ class LoginViewController: UIViewController {
     }
     
     
+//    func navigateToTabBar() {
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController") as UIViewController
+//        self.present(nextViewController, animated:true, completion:nil)
+//    }
+    
     @IBAction func onSignIn(_ sender: Any) {
         let username = usernameField.text!
         let password = passwordField.text!
         
         PFUser.logInWithUsername(inBackground: username, password: password) { user, error in
             if user != nil {
-                self.performSegue(withIdentifier: "loginSegue", sender: nil)
+//                self.performSegue(withIdentifier: "TabBarController", sender: nil)
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "TabBarController") as UIViewController
+                self.present(nextViewController, animated:true, completion:nil)
             } else {
                 SnackBar.make(in: self.view, message: "\(error?.localizedDescription)", duration: .lengthLong).show()
 //                print("Error \(error?.localizedDescription)")
